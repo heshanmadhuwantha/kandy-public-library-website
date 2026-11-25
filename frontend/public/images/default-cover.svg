@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" role="img" aria-labelledby="title desc">
+  <title id="title">Default book cover</title>
+  <desc id="desc">A placeholder illustration for library books without a cover image.</desc>
+  <rect width="300" height="420" rx="26" fill="#e7f7ef"/>
+  <rect x="34" y="40" width="232" height="340" rx="18" fill="#d9e8dc"/>
+  <rect x="60" y="76" width="180" height="16" rx="8" fill="#ffffff" opacity="0.9"/>
+  <rect x="60" y="110" width="150" height="16" rx="8" fill="#ffffff" opacity="0.7"/>
+  <rect x="60" y="144" width="176" height="16" rx="8" fill="#ffffff" opacity="0.7"/>
+  <rect x="60" y="198" width="120" height="88" rx="12" fill="#0f766e" opacity="0.15"/>
+  <path d="M110 252h90" stroke="#0f766e" stroke-width="10" stroke-linecap="round"/>
+  <path d="M110 274h66" stroke="#0f766e" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="150" cy="167" r="14" fill="#0f766e" opacity="0.3"/>
+</svg>
