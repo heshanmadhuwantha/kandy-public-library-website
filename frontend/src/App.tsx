@@ -39,7 +39,7 @@ function PageMeta() {
     const revealTargets = document.querySelectorAll('.section, .highlights, .category-card, .programme-grid article');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-revealed'));
-    }, { threshold: 0.08 });
+    }, { threshold: 0 });
     revealTargets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
   }, [location.pathname]);
