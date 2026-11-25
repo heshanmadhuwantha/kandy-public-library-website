@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { FormField } from '../components/forms/FormField';
 import { Button } from '../components/ui/Button';
 import { SectionHeading } from '../components/ui/SectionHeading';
+import { SuccessModal } from '../components/ui/SuccessModal';
 import type { MembershipFormValues } from '../types';
 import { membershipTypes } from '../data/membership';
 
@@ -21,8 +22,9 @@ const schema = z.object({
 });
 
 export function MembershipPage() {
-  const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   const {
     register,
@@ -32,14 +34,14 @@ export function MembershipPage() {
   } = useForm<MembershipFormValues>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (_values: MembershipFormValues) => {
-    setStatus(null);
+    setErrorMessage(null);
     setIsSubmitting(true);
 
     try {
-      setStatus({ type: 'success', message: 'Demo complete: your details passed validation. No application was transmitted or stored.' });
       reset();
+      setIsSuccessOpen(true);
     } catch (error) {
-      setStatus({ type: 'error', message: error instanceof Error ? error.message : 'Unable to submit your application.' });
+      setErrorMessage(error instanceof Error ? error.message : 'Unable to submit your application.');
     } finally {
       setIsSubmitting(false);
     }
@@ -57,9 +59,9 @@ export function MembershipPage() {
         <div className="application-layout">
           <aside className="application-info"><h2>Membership benefits</h2><ul><li>Borrow from the local collection</li><li>Use reading and study spaces</li><li>Access library research support</li></ul><p className="demo-note">Application instructions: select the category that best describes you, then complete the form. This is a frontend demonstration only.</p></aside>
           <form onSubmit={handleSubmit(onSubmit)} className="application-form">
-          {status ? (
-            <div className={`mb-6 rounded-2xl border px-4 py-3 text-sm ${status.type === 'success' ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : 'border-red-200 bg-red-50 text-red-700'}`} role="alert">
-              {status.message}
+          {errorMessage ? (
+            <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+              {errorMessage}
             </div>
           ) : null}
 
@@ -99,13 +101,19 @@ export function MembershipPage() {
           </div>
 
           <div className="mt-8">
-            <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+            <Button type="submit" size="lg" className="button button-primary membership-submit-button w-full" disabled={isSubmitting}>
               {isSubmitting ? 'Submitting application...' : 'Submit application'}
             </Button>
           </div>
         </form>
         </div>
       </section>
+      <SuccessModal
+        open={isSuccessOpen}
+        onClose={() => setIsSuccessOpen(false)}
+        title="Registration Successful!"
+        message="Your membership registration has been completed successfully. Thank you for choosing Kandy Public Library!"
+      />
     </main>
   );
 }

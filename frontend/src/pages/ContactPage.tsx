@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { FormField } from '../components/forms/FormField';
 import { Button } from '../components/ui/Button';
 import { SectionHeading } from '../components/ui/SectionHeading';
+import { SuccessModal } from '../components/ui/SuccessModal';
 import { libraryInfo } from '../data/libraryInfo';
 import type { ContactFormValues } from '../types';
 
@@ -17,12 +18,12 @@ const schema = z.object({
 });
 
 export function ContactPage() {
-  const [status, setStatus] = useState<string | null>(null);
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormValues>({ resolver: zodResolver(schema) });
 
   const onSubmit = (_values: ContactFormValues) => {
-    setStatus('Demo complete: validation passed. This website does not transmit or store your message. Use the email link below to contact the library.');
     reset();
+    setIsSuccessOpen(true);
   };
 
   return (
@@ -38,7 +39,6 @@ export function ContactPage() {
           <a className="button button-light" href={`mailto:${libraryInfo.email}`}>Open email app</a>
         </aside>
         <form onSubmit={handleSubmit(onSubmit)} className="application-form contact-form">
-          {status && <div className="success-message" role="status">{status}</div>}
           <FormField label="Full Name" name="full_name" error={errors.full_name} required><input id="full_name" {...register('full_name')} /></FormField>
           <FormField label="Email" name="email" error={errors.email} required><input id="email" type="email" {...register('email')} /></FormField>
           <FormField label="Subject" name="subject" error={errors.subject} required><input id="subject" {...register('subject')} /></FormField>
@@ -47,6 +47,13 @@ export function ContactPage() {
         </form>
       </section>
       <section className="site-container map-section" aria-label="Library location"><MapPin /><div><p className="eyebrow">Find us</p><h2>{libraryInfo.address}</h2><p>Plan your visit during the displayed opening hours.</p></div></section>
+      <SuccessModal
+        open={isSuccessOpen}
+        onClose={() => setIsSuccessOpen(false)}
+        title="Message Sent Successfully!"
+        message="Thank you for contacting Kandy Public Library. Your message has been submitted successfully. Our team appreciates your interest."
+        note="This website demo does not send or store your message."
+      />
     </main>
   );
 }

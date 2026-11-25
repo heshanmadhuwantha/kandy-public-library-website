@@ -135,6 +135,19 @@ header > div:first-child { min-height: 76px; }
 .modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: rgba(13,42,29,.68); padding: 20px; }
 .modal-panel { position: relative; width: min(760px,100%); max-height: 88vh; overflow-y: auto; border-radius: 24px; background: white; padding: 32px; box-shadow: 0 24px 80px rgba(0,0,0,.28); }
 .modal-close { position: absolute; right: 16px; top: 16px; z-index: 2; width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 50%; background: white; color: var(--ink); cursor: pointer; }
+.success-modal-panel { width: min(440px,100%); text-align: center; animation: successModalEnter .2s ease-out both; }
+.success-modal-content { padding: 16px 8px 4px; }
+.success-modal-icon { width: 56px; height: 56px; margin: 0 auto 18px; color: var(--forest); }
+.success-modal-content h2 { margin: 0; color: var(--ink); font-size: clamp(1.7rem,5vw,2.2rem); line-height: 1.15; }
+.success-modal-content p { margin: 14px 0 22px; color: var(--muted); line-height: 1.7; }
+.success-modal-content .success-modal-demo-note { margin-top: -10px; font-size: .88rem; }
+.success-modal-close { min-width: 132px; }
+.membership-submit-button { box-shadow: none; }
+.membership-submit-button:active:not(:disabled) { transform: translateY(0) scale(.98); }
+.membership-submit-button:disabled,
+.membership-submit-button:disabled:hover { transform: none; cursor: not-allowed; opacity: .6; background: var(--forest); }
+@keyframes successModalEnter { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .success-modal-panel { animation: none; } }
 
 footer { background: var(--forest-dark); }
 footer a:hover { color: #dac28e; }
