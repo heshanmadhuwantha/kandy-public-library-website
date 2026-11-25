@@ -8,10 +8,10 @@ import { services } from '../data/services';
 import { publicAsset } from '../lib/assets';
 
 const categories = [
-  { name: 'Fiction', image: publicAsset('/assets/images/library-gallery.jpg'), count: '3 titles' },
-  { name: 'Science', image: publicAsset('/assets/images/library-shelves.jpg'), count: '2 titles' },
-  { name: 'Technology', image: publicAsset('/assets/images/library-reading-room.jpg'), count: '2 titles' },
-  { name: "Children's Books", image: publicAsset('/assets/images/library-gallery.jpg'), count: '1 title' },
+  { name: 'Fiction', bookCategories: ['Fiction', 'Classic Fiction'], image: publicAsset('/assets/images/library-gallery.jpg') },
+  { name: 'Science', bookCategories: ['Science'], image: publicAsset('/assets/images/library-shelves.jpg') },
+  { name: 'Technology', bookCategories: ['Technology'], image: publicAsset('/assets/images/library-reading-room.jpg') },
+  { name: "Children's Books", bookCategories: ['Children'], image: publicAsset('/assets/images/library-gallery.jpg') },
 ];
 
 export function HomePage() {
@@ -33,7 +33,7 @@ export function HomePage() {
 
       <section className="highlights premium-highlights">
         <div className="site-container highlight-grid">
-          <article><strong data-count="12">12</strong><span>Titles in the local catalogue</span></article>
+          <article><strong data-count={books.length}>{books.length}</strong><span>Titles in the local catalogue</span></article>
           <article><strong data-count="8">8</strong><span>Library services</span></article>
           <article><strong data-count="3">3</strong><span>Membership types</span></article>
         </div>
@@ -45,7 +45,7 @@ export function HomePage() {
           {categories.map((category) => (
             <Link key={category.name} className="category-card" to="/books">
               <img src={category.image} alt="" loading="lazy" />
-              <div><span>{category.count}</span><h3>{category.name}</h3><ArrowRight /></div>
+              <div><span>{books.filter((book) => category.bookCategories.includes(book.category)).length} titles</span><h3>{category.name}</h3><ArrowRight /></div>
             </Link>
           ))}
         </div>
@@ -54,8 +54,8 @@ export function HomePage() {
       <section className="section featured-section">
         <div className="site-container">
           <SectionHeading eyebrow="Featured collection" title="Stories worth discovering" description="Explore a carefully selected mix of fiction, history, science and personal growth." />
-          <div className="book-grid">{books.slice(0, 6).map((book) => <BookCard key={book.book_id} book={book} />)}</div>
-          <div className="section-action"><Link className="button button-secondary" to="/books">Explore full catalogue</Link></div>
+          <div className="book-grid">{books.slice(0, 4).map((book) => <BookCard key={book.book_id} book={book} />)}</div>
+          <div className="section-action"><Link className="button button-secondary" to="/books">View All Books</Link></div>
         </div>
       </section>
 
